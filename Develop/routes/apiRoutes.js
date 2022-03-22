@@ -20,14 +20,14 @@ router.post("/api/notes", (req, res) => {
     (data) => {
       if (err) throw err;
 
-      const notes = JSON.parse(data);
+      const allNotes = JSON.parse(data);
 
-      newNote.id = notes.length.toString();
-      notes.push(newNote);
+      newNote.id = allNotes.length.toString();
+      allNotes.push(newNote);
 
-      fs.readFile(
+      fs.writeFile(
         path.join(__dirname, "../db/db.json"),
-        JSON.stringify(notes),
+        JSON.stringify(allNotes),
         () => {
           console.log("Success!");
           res.json(newNote);

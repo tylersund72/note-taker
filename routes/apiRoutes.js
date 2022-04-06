@@ -4,39 +4,33 @@ const router = require("express").Router();
 const { v4: uuidv4 } = require("uuid");
 
 router.get("/notes", (req, res) => {
-  fs.readFile(
-    path.join(__dirname, "../db/db.json", (err, data) => {
-      if (err) throw err;
-      const allNotes = JSON.parse(data);
+  fs.readFile(path.join(__dirname, "../db/db.json"), (err, data) => {
+    if (err) throw err;
+    const allNotes = JSON.parse(data);
 
-      res.json(allNotes);
-    })
-  );
+    res.json(allNotes);
+  });
 });
 
 router.post("/notes", (req, res) => {
-  fs.readFile(
-    path.join(__dirname, "../db/db.json"),
-    (err,
-    (data) => {
-      if (err) throw err;
+  fs.readFile(path.join(__dirname, "../db/db.json"), (err, data) => {
+    if (err) throw err;
 
-      const allNotes = JSON.parse(data);
-      const newNote = req.body;
+    const allNotes = JSON.parse(data);
+    const newNote = req.body;
 
-      newNote.id = uuidv4();
-      allNotes.push(newNote);
+    newNote.id = uuidv4();
+    allNotes.push(newNote);
 
-      fs.writeFile(
-        path.join(__dirname, "../db/db.json"),
-        JSON.stringify(allNotes),
-        () => {
-          console.log("Success!");
-          res.json(newNote);
-        }
-      );
-    })
-  );
+    fs.writeFile(
+      path.join(__dirname, "../db/db.json"),
+      JSON.stringify(allNotes),
+      (err) => {
+        if (err) throw err;
+      }
+    );
+    res.json(newNote);
+  });
 });
 
 // router.delete("/notes/:id", (req, res) => {

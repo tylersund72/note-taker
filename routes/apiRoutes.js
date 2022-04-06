@@ -33,25 +33,25 @@ router.post("/notes", (req, res) => {
   });
 });
 
-// router.delete("/notes/:id", (req, res) => {
-//   const noteId = req.params.id;
+router.delete("/notes/:id", (req, res) => {
+  const noteId = req.params.id;
 
-//   fs.readFile(path.join(__dirname, "../db/db.json"), (err, data) => {
-//     if (err) throw err;
-//     const currentNotes = JSON.parse(data);
-//     const currentNotesArray = currentNotes.fiter((item) => {
-//       return item.id !== noteId;
-//     });
+  fs.readFile(path.join(__dirname, "../db/db.json"), (err, data) => {
+    if (err) throw err;
+    const currentNotes = JSON.parse(data);
+    const currentNotesArray = currentNotes.filter((item) => {
+      return item.id !== noteId;
+    });
 
-//     fs.writeFile(
-//       path.join(__dirname, "../db/db.json"),
-//       JSON.stringify(currentNotesArray),
-//       () => {
-//         console.log("Successfully deleted note.");
-//         res.json(currentNotesArray);
-//       }
-//     );
-//   });
-// });
+    fs.writeFile(
+      path.join(__dirname, "../db/db.json"),
+      JSON.stringify(currentNotesArray),
+      () => {
+        console.log("Successfully deleted note.");
+        res.json(currentNotesArray);
+      }
+    );
+  });
+});
 
 module.exports = router;
